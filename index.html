@@ -1028,8 +1028,21 @@
         document.getElementById('email').focus();
         return;
       }
-      this.style.display = 'none';
-      document.getElementById('thankyou').style.display = 'block';
+      const name = document.getElementById('name').value.trim();
+      const note = document.getElementById('note').value.trim();
+      const btn = this.querySelector('.submit-btn');
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
+      const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxMDCHU4pNa1ht5S8oJbp4vAfzFx8aGUforQ8brQTrouqBnp5w_Zyx2AOnkwLfY-Z5DKA/exec';
+      fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: name, email: email, note: note })
+      }).finally(function() {
+        document.getElementById('signupForm').style.display = 'none';
+        document.getElementById('thankyou').style.display = 'block';
+      });
     });
   </script>
 
